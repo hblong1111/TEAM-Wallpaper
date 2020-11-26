@@ -23,7 +23,6 @@ public class HomeViewModel extends ViewModel {
         listCategoryLiveData = new MutableLiveData<>();
 
         categoryRepository = new CategoryRepository();
-        Log.e("longhb", "ok");
     }
 
     public MutableLiveData<List<Category>> getListCategoryLiveData() {

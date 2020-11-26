@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.longhb.myapplication.R;
 import com.longhb.myapplication.adapter.ViewPagerHomeAdapter;
@@ -15,7 +16,7 @@ import com.longhb.myapplication.viewmodel.HomeViewModel;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private HomeViewModel viewModel;
 
@@ -34,6 +35,16 @@ public class HomeActivity extends AppCompatActivity {
 
         viewModel.getAllCategory();
 
+        binding.imageButton.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case  R.id.imageButton:
+                binding.drawLayout.openDrawer(binding.nav);
+                break;
+        }
     }
 }
