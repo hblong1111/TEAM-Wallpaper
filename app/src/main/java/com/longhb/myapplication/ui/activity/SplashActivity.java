@@ -1,8 +1,10 @@
-package com.longhb.myapplication;
+package com.longhb.myapplication.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.longhb.myapplication.R;
 
 public class SplashActivity extends AppCompatActivity {
 

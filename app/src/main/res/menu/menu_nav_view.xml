@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_nav_explore"
+        android:icon="@drawable/ic_drawer_explore"
+        android:title="Explore" />
+    <item
+        android:id="@+id/item_nav_favorite"
+        android:icon="@drawable/ic_drawer_favorite"
+        android:title="Favorite" />
+    <item android:title="Other">
+        <menu>
+            <item
+                android:icon="@drawable/ic_drawer_rate"
+                android:id="@+id/item_nav_rate"
+                android:title="Rate" />
+            <item
+                android:icon="@drawable/ic_drawer_more"
+                android:id="@+id/item_nav_more"
+                android:title="More" />
+            <item
+                android:icon="@drawable/ic_baseline_share_24"
+                android:id="@+id/item_nav_share"
+                android:title="Share" />
+            <item
+                android:icon="@drawable/ic_drawer_settings"
+                android:id="@+id/item_nav_setting"
+                android:title="Setting" />
+        </menu>
+    </item>
+</menu>
