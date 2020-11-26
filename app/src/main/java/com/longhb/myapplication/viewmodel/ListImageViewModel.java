@@ -42,7 +42,6 @@ public class ListImageViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<ImageDetailCategory>> call, Response<List<ImageDetailCategory>> response) {
                 setMutableLiveDataListDetail(response.body());
-                Log.e("longhb", response.body().size() + "");
             }
 
             @Override

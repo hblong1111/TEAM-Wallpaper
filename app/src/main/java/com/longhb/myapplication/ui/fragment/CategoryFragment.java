@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.longhb.myapplication.adapter.CategoryAdapter;
 import com.longhb.myapplication.databinding.FragmentCategoryBinding;
@@ -52,6 +53,17 @@ public class CategoryFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
+        settingSwipeRefresh();
+
         return binding.getRoot();
+    }
+
+    private void settingSwipeRefresh() {
+        binding.swiperefresh.setOnRefreshListener(() -> {
+            categoryList.clear();
+            model.setListCategoryLiveData(categoryList);
+            model.getAllCategory();
+            binding.swiperefresh.setRefreshing(false);
+        });
     }
 }

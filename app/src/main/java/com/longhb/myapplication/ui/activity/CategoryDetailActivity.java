@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.longhb.myapplication.R;
@@ -47,6 +48,7 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
 
         setOnClick();
 
+        settingSwipeRefresh();
     }
 
     private void setOnClick() {
@@ -81,6 +83,15 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
         });
 
         viewModel.getList(idCategory, imageDetailCategoryList.size() + "");
+    }
+
+    private void settingSwipeRefresh() {
+        binding.swiperefresh.setOnRefreshListener(() -> {
+            imageDetailCategoryList.clear();
+            viewModel.setMutableLiveDataListDetail(imageDetailCategoryList);
+            viewModel.getList(idCategory,imageDetailCategoryList.size()+"");
+            binding.swiperefresh.setRefreshing(false);
+        });
     }
 
     @Override

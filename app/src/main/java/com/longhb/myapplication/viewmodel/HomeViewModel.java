@@ -39,7 +39,6 @@ public class HomeViewModel extends ViewModel {
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful()) {
                     setListCategoryLiveData(response.body());
-                    Log.e("longhb", response.body().size() + "");
 
                 }
             }
