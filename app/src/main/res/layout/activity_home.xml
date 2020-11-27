@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout"

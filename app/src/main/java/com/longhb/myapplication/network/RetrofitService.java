@@ -17,4 +17,8 @@ public interface RetrofitService {
     Call<List<ImageDetailCategory>> getListImageDetail(@Query("action") String action,
                                                        @Query("id") String id,
                                                        @Query("offset") String offset);
+
+    @GET("/battleroyale/api/api.php")
+    Call<List<ImageDetailCategory>> getImageOther(@Query("action") String action,
+                                                       @Query("offset") String offset);
 }

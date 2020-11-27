@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.longhb.myapplication.model.ImageDetailCategory;
-import com.longhb.myapplication.repository.ListImageCategoryDetailRepository;
+import com.longhb.myapplication.repository.ImageDetailRepository;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import retrofit2.Response;
 public class ListImageViewModel extends ViewModel {
     private MutableLiveData<List<ImageDetailCategory>> mutableLiveDataListDetail;
 
-    private ListImageCategoryDetailRepository repository;
+    private ImageDetailRepository repository;
 
 
     public ListImageViewModel() {
         mutableLiveDataListDetail = new MutableLiveData<>();
 
-        repository = new ListImageCategoryDetailRepository( );
+        repository = new ImageDetailRepository( );
     }
 
 

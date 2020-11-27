@@ -9,15 +9,18 @@ import java.util.List;
 
 import retrofit2.Call;
 
-public class ListImageCategoryDetailRepository {
+public class ImageDetailRepository {
     private RetrofitService retrofitService;
 
 
-    public ListImageCategoryDetailRepository() {
+    public ImageDetailRepository() {
         this.retrofitService = RetrofitModul.getINSTANCE();
     }
 
     public Call<List<ImageDetailCategory>> getAllCategory(String idCategory,String offset) {
         return retrofitService.getListImageDetail(Conts.ACTION_GET_CATEGORY_DETAIL, idCategory, offset);
+    }
+    public Call<List<ImageDetailCategory>> getImageDetailOther(String action,String offset) {
+        return retrofitService.getImageOther(action, offset);
     }
 }

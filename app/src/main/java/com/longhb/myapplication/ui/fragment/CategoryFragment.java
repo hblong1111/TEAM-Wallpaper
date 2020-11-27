@@ -30,6 +30,10 @@ public class CategoryFragment extends Fragment {
     private CategoryAdapter adapter;
 
     private List<Category> categoryList;
+    private static CategoryFragment INSTANCE;
+
+    private CategoryFragment() {
+    }
 
     @Nullable
     @Override
@@ -65,5 +69,10 @@ public class CategoryFragment extends Fragment {
             model.getAllCategory();
             binding.swiperefresh.setRefreshing(false);
         });
+    }
+
+    public static CategoryFragment getINSTANCE() {
+        if (INSTANCE == null) INSTANCE = new CategoryFragment();
+        return INSTANCE;
     }
 }

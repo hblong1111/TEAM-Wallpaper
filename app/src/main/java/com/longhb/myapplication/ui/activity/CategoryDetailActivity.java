@@ -63,7 +63,9 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
         binding.rcv.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                binding.swiperefresh.setRefreshing(true);
                 viewModel.getList(idCategory, imageDetailCategoryList.size() + "");
+                binding.swiperefresh.setRefreshing(false);
             }
         });
     }
