@@ -1,10 +1,19 @@
 package com.longhb.myapplication.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.longhb.myapplication.utils.Conts;
 
-public class ImageDetailCategory {
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.URL;
+
+public class ImageDetailCategory implements Serializable {
 
     @SerializedName("no")
     @Expose
@@ -39,6 +48,7 @@ public class ImageDetailCategory {
     @SerializedName("category_name")
     @Expose
     private String categoryName;
+
 
     public Integer getNo() {
         return no;
@@ -124,16 +134,26 @@ public class ImageDetailCategory {
         return categoryName;
     }
 
+    public String getViews() {
+        return Math.floor(Float.parseFloat(viewCount)/100 ) / 10 + "K";
+    }
+
+    public String getDownload() {
+        return Math.floor(Float.parseFloat(downloadCount)/ 100) / 10 + "K";
+    }
+
+
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
 
-
     public String getUrlImage() {
-        return Conts.URL_IMAGE+imageUpload;
+        return Conts.URL_IMAGE + imageUpload;
     }
 
-
+    public String[] getArrTags(){
+        return tags.split(",");
+    }
 }
 

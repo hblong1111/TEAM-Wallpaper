@@ -1,6 +1,7 @@
 package com.longhb.myapplication.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ public class PopularFragment extends Fragment {
     private List<ImageDetailCategory> imageDetailList;
     private ListImageAdapter adapter;
     private GridLayoutManager layoutManager;
-
     private static PopularFragment INSTANCE;
 
     private PopularFragment() {
@@ -87,10 +87,14 @@ public class PopularFragment extends Fragment {
         model.getImageDetailOther(Conts.ACTION_GET_POPULAR, imageDetailList.size() + "");
     }
 
+
     public static PopularFragment getINSTANCE() {
-        if (INSTANCE==null){
-            INSTANCE=new PopularFragment();
-        }
+        if (INSTANCE == null) INSTANCE = new PopularFragment();
         return INSTANCE;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("longhbb", "onDestroy: Popular");
     }
 }

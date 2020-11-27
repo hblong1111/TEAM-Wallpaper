@@ -31,6 +31,10 @@ android {
     buildFeatures {
         dataBinding true
     }
+
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
 }
 
 dependencies {
@@ -74,5 +78,11 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+
+
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
 }

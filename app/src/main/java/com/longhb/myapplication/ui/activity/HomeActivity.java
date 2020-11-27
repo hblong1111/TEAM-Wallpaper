@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding.viewPager.setAdapter(new ViewPagerHomeAdapter(getSupportFragmentManager()));
+        binding.viewPager.setOffscreenPageLimit(5);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
         viewModel.getAllCategory();

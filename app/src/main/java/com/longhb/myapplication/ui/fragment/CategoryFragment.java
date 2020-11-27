@@ -75,4 +75,11 @@ public class CategoryFragment extends Fragment {
         if (INSTANCE == null) INSTANCE = new CategoryFragment();
         return INSTANCE;
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("longhbb", "onDestroy: Category");
+    }
 }

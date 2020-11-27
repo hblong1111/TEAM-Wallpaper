@@ -1,6 +1,7 @@
 package com.longhb.myapplication.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class FeaturedFragment extends Fragment {
 
         configView();
 
+        Log.d("longhbb", "onCreateView: ");
         return binding.getRoot();
     }
 
@@ -55,6 +57,7 @@ public class FeaturedFragment extends Fragment {
 
     private void settingSwipeReferesh() {
         binding.swiperefresh.setOnRefreshListener(() -> {
+            Log.e("longhbb",imageDetailList.size()+" rs");
             imageDetailList.clear();
             model.setListFeature(imageDetailList);
             model.getImageDetailOther(Conts.ACTION_GET_FEATURED, imageDetailList.size() + "");
@@ -82,6 +85,7 @@ public class FeaturedFragment extends Fragment {
         adapter = new ListImageAdapter(imageDetailList);
         model.getListFeature().observe(getActivity(), imageDetailCategories -> {
             imageDetailList.addAll(imageDetailCategories);
+            Log.e("longhbb", imageDetailList.size() + "");
             adapter.notifyDataSetChanged();
         });
 
@@ -89,9 +93,16 @@ public class FeaturedFragment extends Fragment {
     }
 
     public static FeaturedFragment getINSTANCE() {
-        if (INSTANCE==null){
-            INSTANCE=new FeaturedFragment();
+        if (INSTANCE == null) {
+            INSTANCE = new FeaturedFragment();
         }
         return INSTANCE;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("longhbb", "onDestroyView: ");
     }
 }

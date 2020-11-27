@@ -32,7 +32,6 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
     private String idCategory;
     private String title;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

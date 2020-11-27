@@ -1,6 +1,7 @@
 package com.longhb.myapplication.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,5 +93,11 @@ public class RecentFragment extends Fragment {
             INSTANCE=new RecentFragment();
         }
         return INSTANCE;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("longhbb", "onDestroy: Recenet");
     }
 }

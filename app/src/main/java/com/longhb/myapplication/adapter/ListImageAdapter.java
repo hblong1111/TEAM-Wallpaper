@@ -1,5 +1,6 @@
 package com.longhb.myapplication.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.longhb.myapplication.databinding.AdapterCategoryDetailBinding;
 import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.ui.activity.ImageDetailActivity;
+import com.longhb.myapplication.utils.Conts;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.ViewHolder> {
@@ -28,6 +32,13 @@ public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(list.get(position));
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), ImageDetailActivity.class);
+            intent.putExtra(Conts.CODE_PUT_LIST_IMAGE, (Serializable) list);
+            intent.putExtra(Conts.CODE_PUT_CUSOR, position);
+            view.getContext().startActivity(intent);
+        });
     }
 
     @Override
