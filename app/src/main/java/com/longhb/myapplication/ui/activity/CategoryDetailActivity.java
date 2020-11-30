@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.longhb.myapplication.R;
 import com.longhb.myapplication.adapter.ListImageAdapter;
 import com.longhb.myapplication.databinding.ActivityCategoryDetailBinding;
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
+import com.longhb.myapplication.model.MyViewModelFactory;
 import com.longhb.myapplication.utils.Conts;
 import com.longhb.myapplication.utils.EndlessRecyclerViewScrollListener;
 import com.longhb.myapplication.viewmodel.ListImageViewModel;
@@ -25,7 +25,7 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
     private ListImageViewModel viewModel;
     private ActivityCategoryDetailBinding binding;
 
-    private List<ImageDetailCategory> imageDetailCategoryList;
+    private List<ImageDetail> imageDetailList;
     private ListImageAdapter adapter;
     private GridLayoutManager layoutManager;
 
@@ -38,7 +38,7 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
         binding = ActivityCategoryDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewModel = new ViewModelProvider(this).get(ListImageViewModel.class);
+        viewModel = new ViewModelProvider(this,new MyViewModelFactory(getApplication())).get(ListImageViewModel.class);
 
 
         createData();
@@ -63,7 +63,7 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 binding.swiperefresh.setRefreshing(true);
-                viewModel.getList(idCategory, imageDetailCategoryList.size() + "");
+                viewModel.getList(idCategory, imageDetailList.size() + "");
                 binding.swiperefresh.setRefreshing(false);
             }
         });
@@ -75,22 +75,22 @@ public class CategoryDetailActivity extends AppCompatActivity implements View.On
 
         binding.setTitle(title);
 
-        imageDetailCategoryList = new ArrayList<>();
-        adapter = new ListImageAdapter(imageDetailCategoryList);
+        imageDetailList = new ArrayList<>();
+        adapter = new ListImageAdapter(imageDetailList);
 
         viewModel.getMutableLiveDataListDetail().observe(this, imageDetailCategories -> {
-            imageDetailCategoryList.addAll(imageDetailCategories);
+            imageDetailList.addAll(imageDetailCategories);
             adapter.notifyDataSetChanged();
         });
 
-        viewModel.getList(idCategory, imageDetailCategoryList.size() + "");
+        viewModel.getList(idCategory, imageDetailList.size() + "");
     }
 
     private void settingSwipeRefresh() {
         binding.swiperefresh.setOnRefreshListener(() -> {
-            imageDetailCategoryList.clear();
-            viewModel.setMutableLiveDataListDetail(imageDetailCategoryList);
-            viewModel.getList(idCategory,imageDetailCategoryList.size()+"");
+            imageDetailList.clear();
+            viewModel.setMutableLiveDataListDetail(imageDetailList);
+            viewModel.getList(idCategory, imageDetailList.size()+"");
             binding.swiperefresh.setRefreshing(false);
         });
     }

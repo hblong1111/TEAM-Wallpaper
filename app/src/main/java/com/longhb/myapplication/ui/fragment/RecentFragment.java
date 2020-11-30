@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.longhb.myapplication.adapter.ListImageAdapter;
 import com.longhb.myapplication.databinding.FragmentFeaturedBinding;
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
 import com.longhb.myapplication.utils.Conts;
 import com.longhb.myapplication.utils.EndlessRecyclerViewScrollListener;
 import com.longhb.myapplication.viewmodel.HomeViewModel;
@@ -26,7 +26,7 @@ import java.util.List;
 public class RecentFragment extends Fragment {
     private HomeViewModel model;
     private FragmentFeaturedBinding binding;
-    private List<ImageDetailCategory> imageDetailList;
+    private List<ImageDetail> imageDetailList;
     private ListImageAdapter adapter;
     private GridLayoutManager layoutManager;
 
@@ -95,9 +95,11 @@ public class RecentFragment extends Fragment {
         return INSTANCE;
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("longhbb", "onDestroy: Recenet");
+    public void onDestroyView() {
+        super.onDestroyView();
+        imageDetailList.clear();
+        adapter.notifyDataSetChanged();
     }
 }

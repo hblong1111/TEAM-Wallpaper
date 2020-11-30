@@ -1,26 +1,32 @@
 package com.longhb.myapplication.viewmodel;
 
-import androidx.lifecycle.MutableLiveData;
+import android.app.Application;
+
 import androidx.lifecycle.ViewModel;
 
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
+import com.longhb.myapplication.repository.ImageDetailRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageDetailViewModel extends ViewModel {
-    private List<ImageDetailCategory> listImage = new ArrayList<>();
+    private List<ImageDetail> listImage = new ArrayList<>();
 
     private int numCur;
+    private ImageDetail imageDetailCur;
 
-    public ImageDetailViewModel() {
+    ImageDetailRepository repository;
+
+    public ImageDetailViewModel(Application application) {
+        repository = new ImageDetailRepository(application);
     }
 
-    public List<ImageDetailCategory> getListImage() {
+    public List<ImageDetail> getListImage() {
         return listImage;
     }
 
-    public void setListImage(List<ImageDetailCategory> listImage) {
+    public void setListImage(List<ImageDetail> listImage) {
         this.listImage.addAll(listImage);
     }
 
@@ -30,5 +36,24 @@ public class ImageDetailViewModel extends ViewModel {
 
     public void setNumCur(int numCur) {
         this.numCur = numCur;
+    }
+
+    public boolean checkImage(int id) {
+        if (repository.checkImage(id) == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public ImageDetail getImageDetailCur() {
+        return listImage.get(getNumCur());
+    }
+
+    public void deleteImage(ImageDetail image){
+        repository.delete(image);
+    }
+
+    public void insertImage(ImageDetail image){
+        repository.insert(image);
     }
 }

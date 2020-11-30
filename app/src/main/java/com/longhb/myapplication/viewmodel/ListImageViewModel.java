@@ -1,11 +1,12 @@
 package com.longhb.myapplication.viewmodel;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
 import com.longhb.myapplication.repository.ImageDetailRepository;
 
 import java.util.List;
@@ -15,37 +16,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListImageViewModel extends ViewModel {
-    private MutableLiveData<List<ImageDetailCategory>> mutableLiveDataListDetail;
+    private MutableLiveData<List<ImageDetail>> mutableLiveDataListDetail;
 
     private ImageDetailRepository repository;
 
 
-    public ListImageViewModel() {
+    public ListImageViewModel(Application application) {
         mutableLiveDataListDetail = new MutableLiveData<>();
 
-        repository = new ImageDetailRepository( );
+        repository = new ImageDetailRepository(application );
     }
 
 
 
-    public MutableLiveData<List<ImageDetailCategory>> getMutableLiveDataListDetail() {
+    public MutableLiveData<List<ImageDetail>> getMutableLiveDataListDetail() {
         return mutableLiveDataListDetail;
     }
 
-    public void setMutableLiveDataListDetail(List<ImageDetailCategory> list) {
+    public void setMutableLiveDataListDetail(List<ImageDetail> list) {
         mutableLiveDataListDetail.postValue(list);
     }
 
 
     public void getList(String idCategory,String offset) {
-        repository.getAllCategory(idCategory,offset).enqueue(new Callback<List<ImageDetailCategory>>() {
+        repository.getAllCategory(idCategory,offset).enqueue(new Callback<List<ImageDetail>>() {
             @Override
-            public void onResponse(Call<List<ImageDetailCategory>> call, Response<List<ImageDetailCategory>> response) {
+            public void onResponse(Call<List<ImageDetail>> call, Response<List<ImageDetail>> response) {
                 setMutableLiveDataListDetail(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<ImageDetailCategory>> call, Throwable t) {
+            public void onFailure(Call<List<ImageDetail>> call, Throwable t) {
                 Log.e("longhb", t.getMessage());
             }
         });

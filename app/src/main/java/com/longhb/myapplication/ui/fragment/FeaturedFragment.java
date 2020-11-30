@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.longhb.myapplication.adapter.ListImageAdapter;
 import com.longhb.myapplication.databinding.FragmentFeaturedBinding;
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
 import com.longhb.myapplication.utils.Conts;
 import com.longhb.myapplication.utils.EndlessRecyclerViewScrollListener;
 import com.longhb.myapplication.viewmodel.HomeViewModel;
@@ -27,15 +26,15 @@ import java.util.List;
 public class FeaturedFragment extends Fragment {
     private HomeViewModel model;
     private FragmentFeaturedBinding binding;
-    private List<ImageDetailCategory> imageDetailList;
+    private List<ImageDetail> imageDetailList;
     private ListImageAdapter adapter;
     private GridLayoutManager layoutManager;
 
     private static FeaturedFragment INSTANCE;
 
+
     private FeaturedFragment() {
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,7 +44,6 @@ public class FeaturedFragment extends Fragment {
 
         configView();
 
-        Log.d("longhbb", "onCreateView: ");
         return binding.getRoot();
     }
 
@@ -57,7 +55,6 @@ public class FeaturedFragment extends Fragment {
 
     private void settingSwipeReferesh() {
         binding.swiperefresh.setOnRefreshListener(() -> {
-            Log.e("longhbb",imageDetailList.size()+" rs");
             imageDetailList.clear();
             model.setListFeature(imageDetailList);
             model.getImageDetailOther(Conts.ACTION_GET_FEATURED, imageDetailList.size() + "");
@@ -85,7 +82,6 @@ public class FeaturedFragment extends Fragment {
         adapter = new ListImageAdapter(imageDetailList);
         model.getListFeature().observe(getActivity(), imageDetailCategories -> {
             imageDetailList.addAll(imageDetailCategories);
-            Log.e("longhbb", imageDetailList.size() + "");
             adapter.notifyDataSetChanged();
         });
 
@@ -103,6 +99,7 @@ public class FeaturedFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d("longhbb", "onDestroyView: ");
+        imageDetailList.clear();
+        adapter.notifyDataSetChanged();
     }
 }

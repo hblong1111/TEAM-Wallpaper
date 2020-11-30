@@ -5,6 +5,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.longhb.myapplication.utils.Conts;
@@ -13,14 +17,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 
-public class ImageDetailCategory implements Serializable {
+@Entity
+public class ImageDetail implements Serializable {
 
     @SerializedName("no")
     @Expose
     private Integer no;
+    @PrimaryKey
+    @ColumnInfo(name = "image_id")
     @SerializedName("image_id")
     @Expose
-    private String imageId;
+    private int imageId;
     @SerializedName("image_upload")
     @Expose
     private String imageUpload;
@@ -58,11 +65,11 @@ public class ImageDetailCategory implements Serializable {
         this.no = no;
     }
 
-    public String getImageId() {
+    public Integer getImageId() {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
+    public void setImageId(int imageId) {
         this.imageId = imageId;
     }
 

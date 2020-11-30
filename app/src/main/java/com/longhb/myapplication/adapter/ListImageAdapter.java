@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.longhb.myapplication.databinding.AdapterCategoryDetailBinding;
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
 import com.longhb.myapplication.ui.activity.ImageDetailActivity;
 import com.longhb.myapplication.utils.Conts;
 
@@ -16,9 +16,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.ViewHolder> {
-    private List<ImageDetailCategory> list;
+    private List<ImageDetail> list;
 
-    public ListImageAdapter(List<ImageDetailCategory> list) {
+    public ListImageAdapter(List<ImageDetail> list) {
         this.list = list;
     }
 
@@ -55,7 +55,7 @@ public class ListImageAdapter extends RecyclerView.Adapter<ListImageAdapter.View
             binding = itemView;
         }
 
-        public void bind(ImageDetailCategory detail) {
+        public void bind(ImageDetail detail) {
             binding.setImage(detail);
             binding.executePendingBindings();
         }

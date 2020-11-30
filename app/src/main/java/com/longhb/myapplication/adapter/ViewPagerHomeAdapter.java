@@ -26,13 +26,13 @@ public class ViewPagerHomeAdapter extends FragmentPagerAdapter {
             case 0:
                 return CategoryFragment.getINSTANCE();
             case 1:
-                return RecentFragment.getINSTANCE();
+                return   RecentFragment.getINSTANCE();
             case 2:
-                return FeaturedFragment.getINSTANCE();
+                return   FeaturedFragment.getINSTANCE();
             case 3:
-                return PopularFragment.getINSTANCE();
+                return   PopularFragment.getINSTANCE();
             case 4:
-                return RandomFragment.getINSTANCE();
+                return   RandomFragment.getINSTANCE();
         }
         return null;
     }

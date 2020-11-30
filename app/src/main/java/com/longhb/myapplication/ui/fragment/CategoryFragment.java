@@ -1,5 +1,6 @@
 package com.longhb.myapplication.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class CategoryFragment extends Fragment {
 
     private List<Category> categoryList;
     private static CategoryFragment INSTANCE;
+
 
     private CategoryFragment() {
     }
@@ -76,10 +78,4 @@ public class CategoryFragment extends Fragment {
         return INSTANCE;
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("longhbb", "onDestroy: Category");
-    }
 }

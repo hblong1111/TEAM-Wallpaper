@@ -1,7 +1,7 @@
 package com.longhb.myapplication.network;
 
 import com.longhb.myapplication.model.Category;
-import com.longhb.myapplication.model.ImageDetailCategory;
+import com.longhb.myapplication.model.ImageDetail;
 
 import java.util.List;
 
@@ -14,11 +14,11 @@ public interface RetrofitService {
     Call<List<Category>> getAllCategory(@Query("action") String action);
 
     @GET("/battleroyale/api/api.php")
-    Call<List<ImageDetailCategory>> getListImageDetail(@Query("action") String action,
-                                                       @Query("id") String id,
-                                                       @Query("offset") String offset);
+    Call<List<ImageDetail>> getListImageDetail(@Query("action") String action,
+                                               @Query("id") String id,
+                                               @Query("offset") String offset);
 
     @GET("/battleroyale/api/api.php")
-    Call<List<ImageDetailCategory>> getImageOther(@Query("action") String action,
-                                                       @Query("offset") String offset);
+    Call<List<ImageDetail>> getImageOther(@Query("action") String action,
+                                          @Query("offset") String offset);
 }
