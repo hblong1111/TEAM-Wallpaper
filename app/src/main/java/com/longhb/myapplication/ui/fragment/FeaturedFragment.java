@@ -95,7 +95,6 @@ public class FeaturedFragment extends Fragment {
         return INSTANCE;
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

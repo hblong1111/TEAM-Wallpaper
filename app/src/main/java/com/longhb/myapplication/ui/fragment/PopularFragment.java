@@ -92,7 +92,6 @@ public class PopularFragment extends Fragment {
         if (INSTANCE == null) INSTANCE = new PopularFragment();
         return INSTANCE;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -10,9 +10,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +22,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.longhb.myapplication.R;
 import com.longhb.myapplication.adapter.AdapterViewPagerImage;
 import com.longhb.myapplication.adapter.BottomSheetAdapter;
@@ -28,6 +32,7 @@ import com.longhb.myapplication.model.ImageDetail;
 import com.longhb.myapplication.model.MyViewModelFactory;
 import com.longhb.myapplication.utils.Conts;
 import com.longhb.myapplication.viewmodel.ImageDetailViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -123,6 +128,7 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                 shareItem(imageDetail.getUrlImage());
                 break;
             case R.id.btnSetWallpaper:
+                new TaskSetWallpaper().execute(imageDetail.getUrlImage());
                 break;
             case R.id.btnFavorite:
                 favouriteImage(imageDetail);
@@ -130,6 +136,46 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void setWallpaperMy(String urlImage) {
+
+    }
+
+    class TaskSetWallpaper extends AsyncTask<String, Void, Void> {
+        private ProgressDialog dialog;
+
+        public TaskSetWallpaper() {
+            this.dialog = new ProgressDialog(ImageDetailActivity.this);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Set Wallpaper, please wait...");
+            dialog.show();
+        }
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // do UI work here
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                WallpaperManager wpm = WallpaperManager.getInstance(ImageDetailActivity.this);
+                InputStream ins = new URL(strings[0]).openStream();
+                wpm.setStream(ins);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     private void downloadImage(String urlImage, String name) {
         //ask for permisson
@@ -209,6 +255,7 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                 dialog.dismiss();
             }
         }
+
         @Override
         protected Void doInBackground(String... strings) {
             try {

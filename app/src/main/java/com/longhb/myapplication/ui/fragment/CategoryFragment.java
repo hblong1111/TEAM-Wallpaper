@@ -78,4 +78,5 @@ public class CategoryFragment extends Fragment {
         return INSTANCE;
     }
 
+
 }
