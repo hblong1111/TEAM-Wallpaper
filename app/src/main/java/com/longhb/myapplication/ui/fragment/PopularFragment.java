@@ -92,6 +92,15 @@ public class PopularFragment extends Fragment {
         if (INSTANCE == null) INSTANCE = new PopularFragment();
         return INSTANCE;
     }
+
+    public static PopularFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        PopularFragment fragment = new PopularFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

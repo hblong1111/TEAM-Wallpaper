@@ -95,6 +95,14 @@ public class RandomFragment extends Fragment {
         return INSTANCE;
     }
 
+    public static RandomFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        RandomFragment fragment = new RandomFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onDestroyView() {

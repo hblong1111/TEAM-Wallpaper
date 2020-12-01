@@ -95,6 +95,14 @@ public class FeaturedFragment extends Fragment {
         return INSTANCE;
     }
 
+    public static FeaturedFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        FeaturedFragment fragment = new FeaturedFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

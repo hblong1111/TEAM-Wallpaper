@@ -95,11 +95,13 @@ public class RecentFragment extends Fragment {
         return INSTANCE;
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        imageDetailList.clear();
-        adapter.notifyDataSetChanged();
+    public static RecentFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        RecentFragment fragment = new RecentFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
+
 }
