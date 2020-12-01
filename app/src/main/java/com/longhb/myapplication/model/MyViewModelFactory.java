@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.longhb.myapplication.viewmodel.HomeViewModel;
 import com.longhb.myapplication.viewmodel.ImageDetailViewModel;
 import com.longhb.myapplication.viewmodel.ListImageViewModel;
+import com.longhb.myapplication.viewmodel.SearchViewModel;
 
 public class MyViewModelFactory implements ViewModelProvider.Factory {
     private Application application;
@@ -24,6 +25,8 @@ public class MyViewModelFactory implements ViewModelProvider.Factory {
             return (T) new HomeViewModel(application);
         }else  if (modelClass.isAssignableFrom(ListImageViewModel.class)){
             return (T) new ListImageViewModel(application);
+        }else  if (modelClass.isAssignableFrom(SearchViewModel.class)){
+            return (T) new SearchViewModel(application);
         }
         return (T) new ImageDetailViewModel(application);
     }

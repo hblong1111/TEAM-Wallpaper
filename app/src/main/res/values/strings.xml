@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Battle Royale Wallpapers</string>
+    <string name="policy">https://www.google.com/</string>
 </resources>

@@ -15,17 +15,13 @@
                 android:id="@+id/item_nav_rate"
                 android:title="Rate" />
             <item
-                android:icon="@drawable/ic_drawer_more"
-                android:id="@+id/item_nav_more"
-                android:title="More" />
-            <item
                 android:icon="@drawable/ic_baseline_share_24"
                 android:id="@+id/item_nav_share"
                 android:title="Share" />
             <item
                 android:icon="@drawable/ic_drawer_settings"
-                android:id="@+id/item_nav_setting"
-                android:title="Setting" />
+                android:id="@+id/item_nav_policy"
+                android:title="Policy" />
         </menu>
     </item>
 </menu>

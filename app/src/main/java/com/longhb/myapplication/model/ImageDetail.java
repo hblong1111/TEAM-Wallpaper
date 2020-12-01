@@ -18,7 +18,7 @@ import java.io.Serializable;
 import java.net.URL;
 
 @Entity
-public class ImageDetail implements Serializable {
+public class    ImageDetail implements Serializable {
 
     @SerializedName("no")
     @Expose

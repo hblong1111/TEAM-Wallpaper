@@ -23,6 +23,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private HomeViewModel viewModel;
 
     private HomeFragmentEvent callback;
+
     public HomeFragment(HomeFragmentEvent callback) {
         this.callback = callback;
     }
@@ -40,73 +41,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Log.d("longhbb", "onCreateView: ");
 
         binding.imageButton.setOnClickListener(this);
+        binding.imageButton2.setOnClickListener(this);
+        viewModel.getAllCategory();
         return binding.getRoot();
     }
 
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.imageButton:
                 callback.openNavigationView();
+                break;
+            case R.id.imageButton2:
+                callback.searchImage();
                 break;
         }
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("longhbb", "onResume: ");
 
-        viewModel.getAllCategory();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d("longhbb", "onCreate: ");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("longhbb", "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("longhbb", "onStop: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d("longhbb", "onStart: ");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("longhbb", "onDestroyView: ");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("longhbb", "onDestroy: ");
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.d("longhbb", "onAttach: ");
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment childFragment) {
-        super.onAttachFragment(childFragment);
-        Log.d("longhbb", "onAttachFragment: ");
-    }
 }

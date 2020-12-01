@@ -13,6 +13,7 @@ public class Conts {
     public static final String CODE_PUT_LIST_IMAGE = "listImageDetail";
     public static final String CODE_PUT_CUSOR = "putCusor";
     public static final String DATABASE_NAME = "favorite.db";
+    public static final String ACTION_SEARCH = "get_search";
     public static String BASE_URL="http://topwallpapers.online/";
     public static String URL_IMAGE="http://topwallpapers.online/battleroyale/upload/";
 }

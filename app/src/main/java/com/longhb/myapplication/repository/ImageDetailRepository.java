@@ -32,6 +32,10 @@ public class ImageDetailRepository {
         return retrofitService.getImageOther(action, offset);
     }
 
+    public Call<List<ImageDetail>> searchImage(String action,String search, String offset) {
+        return retrofitService.searchImage(action,search, offset);
+    }
+
     public long checkImage(int id) {
         return db.userDao().check(id);
     }
