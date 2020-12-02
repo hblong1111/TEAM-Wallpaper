@@ -1,5 +1,6 @@
 package com.longhb.myapplication.ui.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,16 +15,16 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.longhb.myapplication.R;
 import com.longhb.myapplication.adapter.AdapterViewPagerImage;
 import com.longhb.myapplication.adapter.BottomSheetAdapter;
@@ -32,7 +33,6 @@ import com.longhb.myapplication.model.ImageDetail;
 import com.longhb.myapplication.model.MyViewModelFactory;
 import com.longhb.myapplication.utils.Conts;
 import com.longhb.myapplication.viewmodel.ImageDetailViewModel;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,6 +45,8 @@ import java.util.List;
 
 public class ImageDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
+    private static final int CODE_HOME_SCREEN = 111;
+    private static final int CODE_LOCK_SCREEN = 222;
     ActivityImageDetailBinding binding;
 
 
@@ -128,7 +130,7 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                 shareItem(imageDetail.getUrlImage());
                 break;
             case R.id.btnSetWallpaper:
-                new TaskSetWallpaper().execute(imageDetail.getUrlImage());
+                showPopup(imageDetail.getUrlImage());
                 break;
             case R.id.btnFavorite:
                 favouriteImage(imageDetail);
@@ -136,14 +138,42 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void setWallpaperMy(String urlImage) {
+    private void showPopup(String urlImage) {
+        PopupMenu popup = new PopupMenu(this, binding.locationsListContent.btnSetWallpaper);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater()
+                .inflate(R.menu.popup_menu, popup.getMenu());
 
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(item -> {
+            int code = 0;
+            switch (item.getItemId()) {
+                case R.id.item_menu_home_screen:
+                    code = CODE_HOME_SCREEN;
+                    break;
+                case R.id.item_menu_lock_screen:
+                    code = CODE_LOCK_SCREEN;
+                    break;
+                case R.id.item_menu_both:
+                    code = CODE_HOME_SCREEN+CODE_LOCK_SCREEN;
+                    break;
+            }
+            
+            new TaskSetWallpaper(code).execute(urlImage);
+            return true;
+        });
+
+        popup.show(); //showing popup menu
     }
 
-    class TaskSetWallpaper extends AsyncTask<String, Void, Void> {
+
+    class TaskSetWallpaper extends AsyncTask<String, Void, InputStream> implements com.longhb.myapplication.ui.activity.TaskSetWallpaper {
         private ProgressDialog dialog;
 
-        public TaskSetWallpaper() {
+        private int isLock;
+
+        public TaskSetWallpaper(int isLock) {
+            this.isLock = isLock;
             this.dialog = new ProgressDialog(ImageDetailActivity.this);
         }
 
@@ -154,26 +184,38 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         }
 
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(InputStream result) {
             // do UI work here
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
-        protected Void doInBackground(String... strings) {
+        protected InputStream doInBackground(String... strings) {
+            InputStream ins = null;
             try {
                 WallpaperManager wpm = WallpaperManager.getInstance(ImageDetailActivity.this);
-                InputStream ins = new URL(strings[0]).openStream();
-                wpm.setStream(ins);
+                ins = new URL(strings[0]).openStream();
+                if (isLock == CODE_HOME_SCREEN) {
+                    wpm.setStream(ins, null, true, WallpaperManager.FLAG_SYSTEM);
+                } else if (isLock == CODE_LOCK_SCREEN) {
+                    wpm.setStream(ins, null, true, WallpaperManager.FLAG_LOCK);
+                } else {
+                    wpm.setStream(ins);
+                }
+
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+            return ins;
         }
     }
 
@@ -278,7 +320,6 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                 while ((bufferLength = inputStream.read(buffer)) > 0) {
                     fileOutput.write(buffer, 0, bufferLength);
                     downloadedSize += bufferLength;
-                    Log.i("Progress:", "downloadedSize:" + downloadedSize + "totalSize:" + totalSize);
                 }
                 fileOutput.close();
             } catch (MalformedURLException e) {

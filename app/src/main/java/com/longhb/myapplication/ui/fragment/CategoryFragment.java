@@ -87,59 +87,6 @@ public class CategoryFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("longhbb", "onResume: CategoryFragment");
 
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d("longhbb", "onCreate: CategoryFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("longhbb", "onPause: CategoryFragment");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("longhbb", "onStop: CategoryFragment");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d("longhbb", "onStart: CategoryFragment");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("longhbb", "onDestroyView: CategoryFragment");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("longhbb", "onDestroy: CategoryFragment");
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.d("longhbb", "onAttach: CategoryFragment");
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment childFragment) {
-        super.onAttachFragment(childFragment);
-        Log.d("longhbb", "onAttachFragment: CategoryFragment");
-    }
 
 }

@@ -1,6 +1,7 @@
 package com.longhb.myapplication.ui.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
@@ -9,7 +10,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -60,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentEvent
         startActivity(new Intent(HomeActivity.this,SearchActivity.class));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -80,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentEvent
                 break;
         }
         binding.drawLayout.closeDrawer(binding.nav);
-        return true;
+        return false;
     }
 
     private void rateApp(boolean b) {

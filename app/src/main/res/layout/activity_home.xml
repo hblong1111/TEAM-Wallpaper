@@ -21,7 +21,8 @@
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="match_parent" 
+            app:itemBackground="@drawable/drawer_selected_item"
             android:layout_gravity="start"
             app:headerLayout="@layout/header_nav_home_acvivity"
             app:itemIconPadding="@dimen/_16sdp"
