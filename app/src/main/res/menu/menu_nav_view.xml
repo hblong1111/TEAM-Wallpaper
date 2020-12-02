@@ -3,9 +3,11 @@
     <item
         android:id="@+id/item_nav_explore"
         android:icon="@drawable/ic_drawer_explore"
+        android:checkable="true"
         android:title="Explore" />
     <item
         android:id="@+id/item_nav_favorite"
+        android:checkable="true"
         android:icon="@drawable/ic_drawer_favorite"
         android:title="Favorite" />
     <item android:title="Other">

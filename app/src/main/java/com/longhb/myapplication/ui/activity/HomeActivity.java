@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentEvent
                 break;
         }
         binding.drawLayout.closeDrawer(binding.nav);
-        return false;
+        return true;
     }
 
     private void rateApp(boolean b) {
