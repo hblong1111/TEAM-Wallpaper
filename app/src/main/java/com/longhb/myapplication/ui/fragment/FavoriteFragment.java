@@ -60,6 +60,11 @@ public class FavoriteFragment extends Fragment {
         viewModel.getListFavorite().observe(getActivity(), imageDetails -> {
             listFavorite.addAll(imageDetails);
             adapter.notifyDataSetChanged();
+            if (listFavorite.size()!=0){
+                binding.tvMess.setVisibility(View.GONE);
+            }else {
+                binding.tvMess.setVisibility(View.VISIBLE);
+            }
         });
     }
 

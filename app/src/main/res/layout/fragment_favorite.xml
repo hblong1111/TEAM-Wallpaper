@@ -15,7 +15,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:background="#550080"
+            android:background="@color/purple_500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -46,10 +46,22 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/rcv"
             android:background="#212121"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <TextView
+            android:id="@+id/tvMess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No image"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_18sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

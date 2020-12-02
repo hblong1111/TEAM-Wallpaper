@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentEvent
         getSupportFragmentManager().beginTransaction().replace(R.id.frContainer, new HomeFragment(this)).commit();
 
         binding.nav.setNavigationItemSelectedListener(this);
+        binding.nav.setCheckedItem(R.id.item_nav_explore);
 
     }
 
@@ -85,6 +86,7 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentEvent
                 break;
         }
         binding.drawLayout.closeDrawer(binding.nav);
+
         return true;
     }
 

@@ -13,12 +13,19 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#20000000"
+        android:background="#66000000"
         android:padding="@dimen/_8sdp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="56dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rcv"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="10dp" />
         <TextView
             android:id="@+id/textView6"
             android:layout_width="0dp"
@@ -38,13 +45,15 @@
         <ImageButton
             android:id="@+id/btnSetWallpaper"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="#00FFFFFF"
-            android:scaleType="centerCrop"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_wallpaper"
+            app:layout_constraintBottom_toBottomOf="@+id/btnFavorite"
             app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_set_wallpaper" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnFavorite"
@@ -52,32 +61,37 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="#00FFFFFF"
+            android:padding="8dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_favorite_border"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_star_outline" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnDownload"
-            android:layout_width="23dp"
-            android:layout_height="28dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="#00FFFFFF"
-            android:scaleType="centerCrop"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_download"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetWallpaper"
             app:layout_constraintEnd_toStartOf="@+id/btnSetWallpaper"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_download" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnShare"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="#00FFFFFF"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/btnDownload"
             app:layout_constraintEnd_toStartOf="@+id/btnDownload"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow_share" />
+            app:srcCompat="@drawable/ic_share"
+            android:padding="8dp" />
 
         <TextView
             android:id="@+id/textView7"
@@ -162,8 +176,8 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/rcv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"

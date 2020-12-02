@@ -30,6 +30,8 @@ public class ImageDetailFragment extends Fragment {
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(imageView);
         photoViewAttacher.setScaleType(ImageView.ScaleType.CENTER_CROP);
         binding.setUrl(urlImage);
+
+        binding.photoView.setMinimumScale(1f);
         return binding.getRoot();
     }
 

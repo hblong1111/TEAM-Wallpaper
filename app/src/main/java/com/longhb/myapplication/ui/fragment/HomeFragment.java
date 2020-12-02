@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         binding.viewPager.setAdapter(new ViewPagerHomeAdapter(getActivity().getSupportFragmentManager()));
-        binding.viewPager.setCurrentItem(3);
+        binding.viewPager.setCurrentItem(1);
         binding.viewPager.setOffscreenPageLimit(5);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 

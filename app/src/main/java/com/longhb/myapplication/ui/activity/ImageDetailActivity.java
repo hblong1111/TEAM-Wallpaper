@@ -15,12 +15,14 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -51,6 +53,9 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
 
 
     ImageDetailViewModel viewModel;
+    private String urlImageDownload;
+    private String nameImageDowload;
+    private String pathRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,18 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
 
         settingViewPage();
 
+        setOnClickView();
+
         binding.mapContent.btnBack.setOnClickListener(view -> onBackPressed());
 
+    }
+
+    private void setOnClickView() {
+        binding.locationsListContent.btnDownload.setOnClickListener(this);
+        binding.locationsListContent.btnFavorite.setOnClickListener(this);
+        binding.locationsListContent.btnSetWallpaper.setOnClickListener(this);
+        binding.locationsListContent.btnShare.setOnClickListener(this);
+        binding.locationsListContent.view.setOnClickListener(this);
     }
 
     private void settingViewPage() {
@@ -95,9 +110,9 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void setIconFavorite() {
         if (viewModel.checkImage(viewModel.getImageDetailCur().getImageId())) {
-            binding.locationsListContent.btnFavorite.setImageResource(R.drawable.ic_star_white);
+            binding.locationsListContent.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite);
         } else {
-            binding.locationsListContent.btnFavorite.setImageResource(R.drawable.ic_star_outline);
+            binding.locationsListContent.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border);
         }
     }
 
@@ -107,10 +122,6 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         binding.locationsListContent.rcv.setAdapter(new BottomSheetAdapter(viewModel.getListImage().get(position).getArrTags()));
         binding.locationsListContent.rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-        binding.locationsListContent.btnDownload.setOnClickListener(this);
-        binding.locationsListContent.btnFavorite.setOnClickListener(this);
-        binding.locationsListContent.btnSetWallpaper.setOnClickListener(this);
-        binding.locationsListContent.btnShare.setOnClickListener(this);
     }
 
     private void handDataBeforActivity() {
@@ -125,6 +136,8 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()) {
             case R.id.btnDownload:
                 downloadImage(imageDetail.getUrlImage(), imageDetail.getImageUpload());
+                urlImageDownload = imageDetail.getUrlImage();
+                nameImageDowload = imageDetail.getImageUpload();
                 break;
             case R.id.btnShare:
                 shareItem(imageDetail.getUrlImage());
@@ -134,6 +147,8 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btnFavorite:
                 favouriteImage(imageDetail);
+                break;
+            case R.id.view:
                 break;
         }
     }
@@ -155,16 +170,17 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                     code = CODE_LOCK_SCREEN;
                     break;
                 case R.id.item_menu_both:
-                    code = CODE_HOME_SCREEN+CODE_LOCK_SCREEN;
+                    code = CODE_HOME_SCREEN + CODE_LOCK_SCREEN;
                     break;
             }
-            
+
             new TaskSetWallpaper(code).execute(urlImage);
             return true;
         });
 
         popup.show(); //showing popup menu
     }
+
 
 
     class TaskSetWallpaper extends AsyncTask<String, Void, InputStream> implements com.longhb.myapplication.ui.activity.TaskSetWallpaper {
@@ -246,10 +262,8 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
     private void favouriteImage(ImageDetail imageDetail) {
         if (viewModel.checkImage(imageDetail.getImageId())) {
             viewModel.deleteImage(imageDetail);
-            Toast.makeText(this, "Delete image!", Toast.LENGTH_SHORT).show();
         } else {
             viewModel.insertImage(imageDetail);
-            Toast.makeText(this, "Insert image!", Toast.LENGTH_SHORT).show();
         }
         setIconFavorite();
     }
@@ -261,14 +275,9 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT)
-                            .show();
                     //TODO
+                    downloadImage(urlImageDownload, nameImageDowload);
                 } else {
-                    // Permission Denied
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
-                            .show();
                 }
                 break;
             default:
@@ -276,7 +285,7 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    class TaskDownloadImage extends AsyncTask<String, Void, Void> {
+    class TaskDownloadImage extends AsyncTask<String, Void, Integer> {
         private ProgressDialog dialog;
 
         public TaskDownloadImage(Context context) {
@@ -291,30 +300,36 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
 
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Integer result) {
             // do UI work here
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+
+            if (result != 0) {
+                Toast.makeText(ImageDetailActivity.this, "Download success!", Toast.LENGTH_SHORT).show();
+                refreshGallery(ImageDetailActivity.this,pathRefresh);
+            } else {
+                Toast.makeText(ImageDetailActivity.this, "Download error!", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected Integer doInBackground(String... strings) {
+            int downloadedSize = 0;
             try {
                 URL url = new URL(strings[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.setDoOutput(true);
                 urlConnection.connect();
-                File SDCardRoot = Environment.getExternalStorageDirectory().getAbsoluteFile();
-                File file = new File(SDCardRoot, strings[1]);
-                if (file.createNewFile()) {
-                    file.createNewFile();
+                File folder = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(), getString(R.string.app_name));
+                if(!folder.exists()){
+                    folder.mkdirs();
                 }
+                File file = new File(folder.getPath(), strings[1]);
                 FileOutputStream fileOutput = new FileOutputStream(file.getAbsoluteFile());
                 InputStream inputStream = urlConnection.getInputStream();
-                int totalSize = urlConnection.getContentLength();
-                int downloadedSize = 0;
                 byte[] buffer = new byte[1024];
                 int bufferLength = 0;
                 while ((bufferLength = inputStream.read(buffer)) > 0) {
@@ -322,12 +337,16 @@ public class ImageDetailActivity extends AppCompatActivity implements View.OnCli
                     downloadedSize += bufferLength;
                 }
                 fileOutput.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+                pathRefresh=file.getAbsolutePath();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null;
+            return downloadedSize;
         }
+    }
+    public static void refreshGallery(Context context, String path) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        mediaScanIntent.setData(Uri.fromFile(new File(path)));
+        context.sendBroadcast(mediaScanIntent);
     }
 }
